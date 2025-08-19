@@ -44,3 +44,5 @@ All times assume 106°F standard processing temperature.
 - https://web.archive.org/web/20230204102223/https://grainy.vision/blog/ecn-2-processing
 - https://www.kodak.com/content/products-brochures/Film/Processing-KODAK-Motion-Picture-Films-Module-7.pdf
 - https://www.kodak.com/en/motion/page/push-pull-processing/
+
+Contributed by Seth - @fl3tching101  
