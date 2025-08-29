@@ -1,0 +1,28 @@
+.author {
+  margin: 0.25rem 0;
+  font-size: 0.9em;
+  color: var(--gray);
+  
+  .author-prefix {
+    font-style: italic;
+  }
+  
+  .author-name {
+    font-weight: 500;
+    color: var(--darkgray);
+    
+    // Handle long author lists gracefully
+    word-break: break-word;
+    line-height: 1.4;
+  }
+}
+
+@media all and (max-width: 600px) {
+  .author {
+    font-size: 0.85em;
+    
+    .author-name {
+      line-height: 1.3;
+    }
+  }
+}
