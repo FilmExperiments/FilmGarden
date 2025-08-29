@@ -1,3 +1,8 @@
+---
+title: ECN-2 Color Developer Recipe
+draft: false
+authors: [Seth - @fl3tching101]
+---
 
 ECN-2 film developer can be used to develop cinema film such as the Kodak Vision3 line or (now discontinued) Fujifilm Eterna. It can also be used to cross-process C-41 films. The ECN-2 process tends to result in a lower contrast image, which is ideal for color grading such as is commonplace in the cinematography industry that ECN-2 films are designed for. But C-41 films cross-processed in ECN-2 may be more "muted" than you would expect due to this nature. 
 
@@ -44,5 +49,3 @@ All times assume 106°F standard processing temperature.
 - https://web.archive.org/web/20230204102223/https://grainy.vision/blog/ecn-2-processing
 - https://www.kodak.com/content/products-brochures/Film/Processing-KODAK-Motion-Picture-Films-Module-7.pdf
 - https://www.kodak.com/en/motion/page/push-pull-processing/
-
-Contributed by Seth - @fl3tching101  

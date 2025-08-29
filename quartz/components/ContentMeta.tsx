@@ -5,6 +5,7 @@ import { classNames } from "../util/lang"
 import { i18n } from "../i18n"
 import { JSX } from "preact"
 import style from "./styles/contentMeta.scss"
+import { FullSlug, resolveRelative } from "../util/path"
 
 interface ContentMetaOptions {
   /**
@@ -31,6 +32,49 @@ export default ((opts?: Partial<ContentMetaOptions>) => {
 
       if (fileData.dates) {
         segments.push(<Date date={getDate(cfg, fileData)!} locale={cfg.locale} />)
+      }
+
+      // Display author if available in frontmatter
+      if (fileData.frontmatter?.author || fileData.frontmatter?.authors) {
+        const authorData = fileData.frontmatter?.author || fileData.frontmatter?.authors
+        let authors: string[] = []
+        
+        if (Array.isArray(authorData)) {
+          authors = authorData.map(a => a.toString().trim())
+        } else if (typeof authorData === "string") {
+          // Handle comma-separated string
+          authors = authorData.split(",").map(a => a.trim())
+        }
+        
+        // Create clickable author links
+        const authorLinks = authors.map((author, index) => {
+          const linkDest = resolveRelative(fileData.slug!, `authors/${author}` as FullSlug)
+          return (
+            <a href={linkDest} class="internal author-link" key={index}>
+              {author}
+            </a>
+          )
+        })
+        
+        // Format the author links with proper separators
+        let formattedAuthors: (string | JSX.Element)[] = []
+        if (authorLinks.length === 1) {
+          formattedAuthors = [authorLinks[0]]
+        } else if (authorLinks.length === 2) {
+          formattedAuthors = [authorLinks[0], " and ", authorLinks[1]]
+        } else if (authorLinks.length > 2) {
+          for (let i = 0; i < authorLinks.length; i++) {
+            if (i === 0) {
+              formattedAuthors.push(authorLinks[i])
+            } else if (i === authorLinks.length - 1) {
+              formattedAuthors.push(", and ", authorLinks[i])
+            } else {
+              formattedAuthors.push(", ", authorLinks[i])
+            }
+          }
+        }
+        
+        segments.push(<span>by {formattedAuthors}</span>)
       }
 
       // Display reading time if enabled

@@ -1,5 +1,6 @@
 import Content from "./pages/Content"
 import TagContent from "./pages/TagContent"
+import AuthorContent from "./pages/AuthorContent"
 import FolderContent from "./pages/FolderContent"
 import NotFound from "./pages/404"
 import ArticleTitle from "./ArticleTitle"
@@ -23,11 +24,13 @@ import Breadcrumbs from "./Breadcrumbs"
 import Comments from "./Comments"
 import Flex from "./Flex"
 import ConditionalRender from "./ConditionalRender"
+import Author from "./Author"
 
 export {
   ArticleTitle,
   Content,
   TagContent,
+  AuthorContent,
   FolderContent,
   Darkmode,
   ReaderMode,
@@ -50,4 +53,5 @@ export {
   Comments,
   Flex,
   ConditionalRender,
+  Author,
 }
