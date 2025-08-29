@@ -11,4 +11,14 @@
       }
     }
   }
+  
+  .author-link {
+    color: var(--secondary);
+    text-decoration: none;
+    
+    &:hover {
+      color: var(--tertiary);
+      text-decoration: underline;
+    }
+  }
 }

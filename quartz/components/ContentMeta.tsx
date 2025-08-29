@@ -5,6 +5,7 @@ import { classNames } from "../util/lang"
 import { i18n } from "../i18n"
 import { JSX } from "preact"
 import style from "./styles/contentMeta.scss"
+import { FullSlug, resolveRelative } from "../util/path"
 
 interface ContentMetaOptions {
   /**
@@ -36,33 +37,44 @@ export default ((opts?: Partial<ContentMetaOptions>) => {
       // Display author if available in frontmatter
       if (fileData.frontmatter?.author || fileData.frontmatter?.authors) {
         const authorData = fileData.frontmatter?.author || fileData.frontmatter?.authors
-        let authorText = ""
+        let authors: string[] = []
         
         if (Array.isArray(authorData)) {
-          if (authorData.length === 1) {
-            authorText = authorData[0]
-          } else if (authorData.length === 2) {
-            authorText = `${authorData[0]} and ${authorData[1]}`
-          } else {
-            const lastAuthor = authorData[authorData.length - 1]
-            const otherAuthors = authorData.slice(0, -1)
-            authorText = `${otherAuthors.join(", ")}, and ${lastAuthor}`
-          }
+          authors = authorData.map(a => a.toString().trim())
         } else if (typeof authorData === "string") {
           // Handle comma-separated string
-          const authors = authorData.split(",").map(a => a.trim())
-          if (authors.length === 1) {
-            authorText = authors[0]
-          } else if (authors.length === 2) {
-            authorText = `${authors[0]} and ${authors[1]}`
-          } else {
-            const lastAuthor = authors[authors.length - 1]
-            const otherAuthors = authors.slice(0, -1)
-            authorText = `${otherAuthors.join(", ")}, and ${lastAuthor}`
+          authors = authorData.split(",").map(a => a.trim())
+        }
+        
+        // Create clickable author links
+        const authorLinks = authors.map((author, index) => {
+          const linkDest = resolveRelative(fileData.slug!, `authors/${author}` as FullSlug)
+          return (
+            <a href={linkDest} class="internal author-link" key={index}>
+              {author}
+            </a>
+          )
+        })
+        
+        // Format the author links with proper separators
+        let formattedAuthors: (string | JSX.Element)[] = []
+        if (authorLinks.length === 1) {
+          formattedAuthors = [authorLinks[0]]
+        } else if (authorLinks.length === 2) {
+          formattedAuthors = [authorLinks[0], " and ", authorLinks[1]]
+        } else if (authorLinks.length > 2) {
+          for (let i = 0; i < authorLinks.length; i++) {
+            if (i === 0) {
+              formattedAuthors.push(authorLinks[i])
+            } else if (i === authorLinks.length - 1) {
+              formattedAuthors.push(", and ", authorLinks[i])
+            } else {
+              formattedAuthors.push(", ", authorLinks[i])
+            }
           }
         }
         
-        segments.push(<span>by {authorText}</span>)
+        segments.push(<span>by {formattedAuthors}</span>)
       }
 
       // Display reading time if enabled
